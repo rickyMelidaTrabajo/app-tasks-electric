@@ -1,0 +1,50 @@
+.form {
+  position: absolute;
+  background: #f9fafb;
+  width: 300px;
+  height: 300px;
+  top: 40%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -150px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.form div:nth-child(1) {
+  padding-top: 50%;
+}
+
+.form div input {
+  height: 45px;
+  width: 225px;
+}
+
+.form button {
+  height: 45px;
+  width: 225px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-top: 5%;
+  background: #0275db;
+  color: white;
+  font-weight: bold;
+}
+
+.form img {
+  opacity: 0.2;
+}
+
+.form strong {
+  display: block;
+  color: rgb(22, 22, 22);
+  opacity: 0.2;
+}
+
+::placeholder {
+  padding-left: 5%;
+}
+
+.close-session {
+  margin-right: 20px;
+}

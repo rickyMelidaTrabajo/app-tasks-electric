@@ -1,0 +1,73 @@
+<div class="container">
+  <form action="">
+    <div class="row">
+      <div class="col-md-12">
+        <label for="task-type" class="form-label">Tipo de Tarea</label>
+        <select class="form-select" name="miselect" id="task-type" [(ngModel)]="taskSelect">
+          <option [value]="item" *ngFor="let item of typesTask">{{item}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label for="turn" class="form-label">Turno</label>
+        <select class="form-select" id="turn" aria-label="Default select example">
+          <option value="manana" selected>Mañana</option>
+          <option value="tarde">Tarde</option>
+          <option value="noche">Noche</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label for="h_start" class="form-label">Hora inicio</label>
+        <input type="time" class="form-control" id="h_start">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label for="h_finish" class="form-label">Hora Final</label>
+        <input type="time" class="form-control" id="h_finish">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label for="h_man" class="form-label">Horas Hombre</label>
+        <input type="time" class="form-control" id="h_man" disabled>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label for="description" class="form-label">Descripcion</label>
+        <textarea class="form-control" id="description" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label for="before" class="form-label">Antes</label>
+        <input class="form-control" type="file" id="before">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label for="after" class="form-label">Despues</label>
+        <input class="form-control" type="file" id="after">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="button">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
