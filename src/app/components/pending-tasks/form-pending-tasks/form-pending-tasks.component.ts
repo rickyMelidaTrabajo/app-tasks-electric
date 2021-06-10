@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-form-pending-tasks',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-pending-tasks.component.scss'],
 })
 export class FormPendingTasksComponent implements OnInit {
+  
+  //formPendingTask: FormGroup;
+  //dataPendingTask: Array<any> = new Array<any>();
+
   typesTask: string[] = [
     'Rutinas',
     'Asistencia',
@@ -21,6 +26,22 @@ export class FormPendingTasksComponent implements OnInit {
   taskSelect = 'Rutinas';
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() { 
 
+    //this.createFormModel();
+  }
+
+/*  createFormModel() {
+    this.formPendingTask = this.formBuilder.group({
+      taskType: ['mantenimiento'],
+      turn: [''],
+      description: ['']
+
+    })
+  }
+
+
+  save(){
+    console.log(this.formPendingTask.value);
+  }*/
 }
