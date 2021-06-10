@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-completed-tasks.component.scss'],
 })
 export class FormCompletedTasksComponent implements OnInit {
+
+  completedTask: any;
+
   typesTask: string[] = [
     'Rutinas',
     'Asistencia',
@@ -20,9 +23,29 @@ export class FormCompletedTasksComponent implements OnInit {
   ];
   selectedQuantity: any;
   taskSelect = 'Rutinas';
-  constructor() { }
+  constructor() {
+    this.completedTask = {
+      state: 'Finalizado',
+      typeTask: '',
+      turn: '',
+      hourStart: '',
+      hourEnd: '',
+      hourMan: '',
+      description: '',
+      photoBefore: null,
+      photoAfter: null
+    }
+  }
 
   ngOnInit() {
+  }
+
+  save() {
+    console.log(this.completedTask);
+  }
+
+  fileEvent(image: Event) {
+    console.log((<HTMLInputElement>image.target).files[0]);
   }
 
 }

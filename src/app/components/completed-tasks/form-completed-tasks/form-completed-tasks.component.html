@@ -1,9 +1,10 @@
 <div class="container">
-  <form action="">
+  <form #useForm="ngForm" (ngSubmit)="save()">
     <div class="row">
       <div class="col-md-12">
         <label for="task-type" class="form-label">Tipo de Tarea</label>
-        <select class="form-select" name="miselect" id="task-type" [(ngModel)]="taskSelect">
+        <select class="form-select" name="taskType" #taskType="ngModel" [(ngModel)]="completedTask.typeTask"
+          id="task-type" [(ngModel)]="taskSelect">
           <option [value]="item" *ngFor="let item of typesTask">{{item}}</option>
         </select>
       </div>
@@ -12,7 +13,8 @@
     <div class="row">
       <div class="col-md-12">
         <label for="turn" class="form-label">Turno</label>
-        <select class="form-select" id="turn" aria-label="Default select example">
+        <select class="form-select" name="turn" #turn="ngModel" [(ngModel)]="completedTask.turn" id="turn"
+          aria-label="Default select example">
           <option value="manana" selected>Mañana</option>
           <option value="tarde">Tarde</option>
           <option value="noche">Noche</option>
@@ -23,49 +25,55 @@
     <div class="row">
       <div class="col-md-12">
         <label for="h_start" class="form-label">Hora inicio</label>
-        <input type="time" class="form-control" id="h_start">
+        <input type="time" name="hourStart" #hourStart="ngModel" [(ngModel)]="completedTask.hourStart"
+          class="form-control" id="h_start">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <label for="h_finish" class="form-label">Hora Final</label>
-        <input type="time" class="form-control" id="h_finish">
+        <input type="time" name="hourEnd" #hourEnd="ngModel" [(ngModel)]="completedTask.hourEnd" class="form-control"
+          id="h_finish">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <label for="h_man" class="form-label">Horas Hombre</label>
-        <input type="time" class="form-control" id="h_man" disabled>
+        <input type="time" name="hourMan" #hourMan="ngModel" [(ngModel)]="completedTask.hourMan" class="form-control"
+          id="h_man" disabled>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <label for="description" class="form-label">Descripcion</label>
-        <textarea class="form-control" id="description" rows="3"></textarea>
+        <textarea class="form-control" name="description" #description="ngModel" [(ngModel)]="completedTask.description"
+          id="description" rows="3"></textarea>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <label for="before" class="form-label">Antes</label>
-        <input class="form-control" type="file" id="before">
+        <input (change)="fileEvent($event)" class="form-control" name="photoBefore" #photoBefore="ngModel"
+          [(ngModel)]="completedTask.photoBefore" type="file" id="before">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <label for="after" class="form-label">Despues</label>
-        <input class="form-control" type="file" id="after">
+        <input class="form-control" (change)="fileEvent($event)" name="photoAfter" #photoAfter="ngModel"
+          [(ngModel)]="completedTask.photoAfter" type="file" id="after">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <div class="d-grid gap-2">
-          <button class="btn btn-primary" type="button">Aceptar</button>
+          <button class="btn btn-primary" type="submit">Aceptar</button>
         </div>
       </div>
     </div>
