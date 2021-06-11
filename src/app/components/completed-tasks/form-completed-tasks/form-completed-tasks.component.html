@@ -1,5 +1,6 @@
 <div class="container">
   <form #useForm="ngForm" (ngSubmit)="save()">
+    <!--------------------------------- Tipo de tareas ---------------------------->
     <div class="row">
       <div class="col-md-12">
         <label for="task-type" class="form-label">Tipo de Tarea</label>
@@ -10,6 +11,7 @@
       </div>
     </div>
 
+    <!--------------------------------- Turnos ------------------------------------>
     <div class="row">
       <div class="col-md-12">
         <label for="turn" class="form-label">Turno</label>
@@ -22,6 +24,7 @@
       </div>
     </div>
 
+    <!--------------------------------- Hora Inicio ------------------------------->
     <div class="row">
       <div class="col-md-12">
         <label for="h_start" class="form-label">Hora inicio</label>
@@ -30,6 +33,7 @@
       </div>
     </div>
 
+    <!--------------------------------- Hora Fin ---------------------------------->
     <div class="row">
       <div class="col-md-12">
         <label for="h_finish" class="form-label">Hora Final</label>
@@ -38,6 +42,7 @@
       </div>
     </div>
 
+    <!--------------------------------- Horas Hombre ------------------------------>
     <div class="row">
       <div class="col-md-12">
         <label for="h_man" class="form-label">Horas Hombre</label>
@@ -46,6 +51,7 @@
       </div>
     </div>
 
+    <!--------------------------------- Descripcion -------------------------------->
     <div class="row">
       <div class="col-md-12">
         <label for="description" class="form-label">Descripcion</label>
@@ -54,18 +60,20 @@
       </div>
     </div>
 
+    <!--------------------------------- Imagen Antes ------------------------------>
     <div class="row">
       <div class="col-md-12">
         <label for="before" class="form-label">Antes</label>
-        <input (change)="fileEvent($event)" class="form-control" name="photoBefore" #photoBefore="ngModel"
+        <input (change)="getImageBefore($event)" class="form-control" name="photoBefore" #photoBefore="ngModel"
           [(ngModel)]="completedTask.photoBefore" type="file" id="before">
       </div>
     </div>
 
+    <!--------------------------------- Imagen Despues ----------------------------->
     <div class="row">
       <div class="col-md-12">
         <label for="after" class="form-label">Despues</label>
-        <input class="form-control" (change)="fileEvent($event)" name="photoAfter" #photoAfter="ngModel"
+        <input class="form-control" (change)="getImageAfter($event)" name="photoAfter" #photoAfter="ngModel"
           [(ngModel)]="completedTask.photoAfter" type="file" id="after">
       </div>
     </div>
@@ -73,7 +81,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="d-grid gap-2">
-          <button class="btn btn-primary" type="submit">Aceptar</button>
+          <button class="btn btn-primary" type="submit">Guardar</button>
         </div>
       </div>
     </div>

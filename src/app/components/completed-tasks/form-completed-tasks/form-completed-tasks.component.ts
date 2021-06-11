@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Images } from 'src/app/models/images.interface';
 
 
 @Component({
@@ -9,6 +10,11 @@ import { Component, OnInit } from '@angular/core';
 export class FormCompletedTasksComponent implements OnInit {
 
   completedTask: any;
+
+  images: Images = {
+    imageAfter: new Array(),
+    imageBefore: new Array()
+  }
 
   typesTask: string[] = [
     'Rutinas',
@@ -23,6 +29,7 @@ export class FormCompletedTasksComponent implements OnInit {
   ];
   selectedQuantity: any;
   taskSelect = 'Rutinas';
+
   constructor() {
     this.completedTask = {
       state: 'Finalizado',
@@ -41,11 +48,17 @@ export class FormCompletedTasksComponent implements OnInit {
   }
 
   save() {
-    console.log(this.completedTask);
+    // console.log(this.completedTask);
+    console.log(this.images);
   }
 
-  fileEvent(image: Event) {
-    console.log((<HTMLInputElement>image.target).files[0]);
+  getImageBefore(event) {
+    this.images.imageBefore = event.target.files[0];
+    console.log(this.images.imageBefore);
   }
 
+  getImageAfter(event) {
+    this.images.imageAfter = event.target.files[0];
+    console.log(this.images.imageAfter);
+  }
 }
