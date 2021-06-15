@@ -37,7 +37,8 @@
               "src/global.scss"
             ],
             "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/moment/min/moment.min.js"
             ]
           },
           "configurations": {
@@ -121,10 +122,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "e2e": {
