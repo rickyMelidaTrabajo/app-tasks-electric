@@ -1,4 +1,4 @@
-<div class="container">
+ <div class="container">
   <form #useForm="ngForm" (ngSubmit)="save()">
     <!--------------------------------- Tipo de tareas ---------------------------->
     <div class="row">
@@ -37,7 +37,7 @@
     <div class="row">
       <div class="col-md-12">
         <label for="h_finish" class="form-label">Hora Final</label>
-        <input type="time" (blur)="example($event)" name="hourEnd" #hourEnd="ngModel"
+        <input type="time" (blur)="hoursMan()" name="hourEnd" #hourEnd="ngModel"
           [(ngModel)]="completedTask.hourEnd" class="form-control" id="h_finish">
       </div>
     </div>
@@ -46,7 +46,7 @@
     <div class="row">
       <div class="col-md-12">
         <label for="h_man" class="form-label">Horas Hombre</label>
-        <input type="time" name="hourMan" #hourMan="ngModel" [(ngModel)]="completedTask.hourMan" class="form-control"
+        <input type="time" name="hourMan" #hourMan="ngModel" value="00:00" [(ngModel)]="completedTask.hourMan" class="form-control"
           id="h_man" disabled>
       </div>
     </div>

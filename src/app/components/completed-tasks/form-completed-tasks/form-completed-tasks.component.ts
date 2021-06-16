@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Images } from 'src/app/models/images.interface';
 import * as moment from 'moment';
+import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
 
 @Component({
@@ -12,10 +12,8 @@ export class FormCompletedTasksComponent implements OnInit {
 
   completedTask: any;
 
-  images: Images = {
-    imageAfter: new Array(),
-    imageBefore: new Array()
-  };
+  image_before: Array<File> = null;
+  image_after: Array<File> = null;
 
   typesTask: string[] = [
     'Rutinas',
@@ -31,7 +29,7 @@ export class FormCompletedTasksComponent implements OnInit {
   selectedQuantity: any;
   taskSelect = 'Rutinas';
 
-  constructor() {
+  constructor(private taskServices: TasksServicesService) {
     this.completedTask = {
       state: 'Finalizado',
       typeTask: '',
@@ -46,32 +44,44 @@ export class FormCompletedTasksComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(`Today is ${moment()}`);
   }
 
   save() {
-    console.log(this.completedTask);
-    //console.log(this.images);
+    let data = new FormData();
+
+    for(let i=0;i<this.image_after.length;i++) {
+      data.append('data', JSON.stringify(this.completedTask));
+      data.append('imageAfter', this.image_after[i], this.image_after[i].name);
+      data.append('imageBefore', this.image_before[i], this.image_before[i].name);
+    }
+
+
+    this.taskServices.addPendingTask(data).subscribe(
+      res=>{
+        console.log(res);
+      },
+      err=>{
+        console.log(`Error al guardar datos! ${err}`)
+      }
+    )
   }
 
   getImageBefore(event) {
-    this.images.imageBefore = event.target.files[0];
-    console.log(this.images.imageBefore);
+    this.image_before = event.target.files;
   }
 
   getImageAfter(event) {
-    this.images.imageAfter = event.target.files[0];
-    console.log(this.images.imageAfter);
+    this.image_after = event.target.files;
   }
 
-  hourMan(startHour, endHour) {
-    const hourStart = moment(startHour, 'HH:mm:ss');
-    const hourEnd = moment(endHour, 'HH:mm:ss');
-    console.log(hourEnd.diff(hourStart) / 3600000);
-    // return hourEnd.diff(hourStart) / 3600000;
+  hoursMan() {
+    if(this.completedTask.hourStart && this.completedTask.hourEnd) {
+      const hourStart = moment(this.completedTask.hourStart, 'HH:mm:ss');
+      const hourEnd = moment(this.completedTask.hourEnd, 'HH:mm:ss');
+      
+      return this.completedTask.hourMan = moment.utc(hourEnd.diff(hourStart)).format('HH:mm'); 
+    }
+    return this.completedTask.hourMan = '00:00';    
   }
 
-  example(event) {
-    console.log(event.target.value);
-  }
 }

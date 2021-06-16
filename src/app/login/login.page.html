@@ -4,10 +4,12 @@
   </div>
   <div class="brand-title">Eléctrica PLG</div>
   <div class="inputs">
-    <label>Usuario</label>
-    <input type="text" placeholder="Ingrese su usuario" />
-    <label>Contraseña</label>
-    <input type="password" placeholder="Ingrese su Contraseña" />
-    <button type="submit">LOGIN</button>
+    <form #useForm="ngForm" (ngSubmit)="getDataUser()">
+      <label>Usuario</label>
+      <input type="text" name="username" #username="ngModel" [(ngModel)]="dataUser.username" placeholder="Ingrese su usuario" />
+      <label>Contraseña</label>
+      <input type="password" name="password" #password="ngModel" [(ngModel)]="dataUser.password" placeholder="Ingrese su Contraseña" />
+      <button type="submit">LOGIN</button>
+    </form>
   </div>
 </div>
