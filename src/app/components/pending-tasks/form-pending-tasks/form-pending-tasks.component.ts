@@ -32,7 +32,7 @@ export class FormPendingTasksComponent implements OnInit {
       description: '',
       dateGeneration: new Date(),
       technician: ['Ricardo Melida', 'Junior']
-    }
+    };
   }
 
   ngOnInit() {

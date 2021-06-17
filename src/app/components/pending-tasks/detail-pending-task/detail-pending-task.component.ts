@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-detail-pending-task',
@@ -7,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailPendingTaskComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
+  closeModal() {
+    this.modalController.dismiss({});
+  }
 }

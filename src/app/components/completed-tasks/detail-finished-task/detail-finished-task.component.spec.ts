@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DetailPendingTaskComponent } from './detail-pending-task.component';
+import { DetailFinishedTaskComponent } from './detail-finished-task.component';
 
 describe('DetailPendingTaskComponent', () => {
-  let component: DetailPendingTaskComponent;
-  let fixture: ComponentFixture<DetailPendingTaskComponent>;
+  let component: DetailFinishedTaskComponent;
+  let fixture: ComponentFixture<DetailFinishedTaskComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailPendingTaskComponent ],
+      declarations: [DetailFinishedTaskComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DetailPendingTaskComponent);
+    fixture = TestBed.createComponent(DetailFinishedTaskComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
