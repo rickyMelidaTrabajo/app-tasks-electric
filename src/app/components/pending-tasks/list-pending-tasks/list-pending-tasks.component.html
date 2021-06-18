@@ -1,29 +1,17 @@
 <div class="container">
 
-  <div *ngFor="let task of tasks">
+  <div *ngFor="let task of tasks; let i=index;">
+    <div class="card">
+      <img src="https://townandcountryremovals.com/wp-content/uploads/2013/10/firefox-logo-200x200.png"
+        class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title {{ i+1 }}</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+          content.</p>
+        <a class="btn btn-primary" (click)="openModal()">Go somewhere</a>
+      </div>
+    </div>
 
-    <ion-card class="my-4">
-      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="http://tech21info.com/admin/wp-content/uploads/2013/03/chrome-logo-200x200.png"
-              class="d-block w-100" alt="Tarea Pendiente">
-          </div>
-        </div>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Madison, WI</ion-card-title>
-        <ion-card-subtitle>Destination</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the
-        Wisconsin
-        Territory in 1836.
-      </ion-card-content>
-      <div class="m-3">
-        <a class="btn btn-warning stretched-link" (click)="openModal()">Cerrar Pendiente</a>
-      </div>
-    </ion-card>
   </div>
 
 </div>
