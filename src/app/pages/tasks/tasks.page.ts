@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
 interface User {
   id: number;
@@ -14,21 +16,45 @@ interface User {
 })
 export class TasksPage implements OnInit {
   typeTask: string;
+  dataTask: string;
+  token: string;
 
-  constructor(public nav: NavController) { }
+  constructor(public nav: NavController, private taskService: TasksServicesService) { }
 
   ngOnInit() {
     this.typeTask = 'completed';
-  }
-
-  compareWith(o1: User, o2: User) {
-    console.log(o1);
-    console.log(o2);
-    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+    this.token = localStorage.getItem('token');
+    this.getFinishedTasks();
   }
 
   closeSession() {
     this.nav.navigateBack('/login');
+  }
+
+  changeTask(typeTask) {
+    typeTask === 'completed' ? this.getFinishedTasks() : this.getPendingTasks();
+  }
+
+  getPendingTasks() {
+    this.taskService.getPendingTasks(this.token).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getFinishedTasks() {
+    this.taskService.getFinishedTasks(this.token).subscribe(
+      (res: any) => {
+        this.dataTask = JSON.stringify(res.tasks);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
 }

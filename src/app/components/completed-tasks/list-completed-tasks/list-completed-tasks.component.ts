@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-finished-task.component';
 
@@ -8,6 +8,7 @@ import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-fini
   styleUrls: ['./list-completed-tasks.component.scss'],
 })
 export class ListCompletedTasksComponent implements OnInit {
+  @Input() data: string;
 
   tasks: Array<any> = new Array();
   constructor(public modalController: ModalController) { }
@@ -16,6 +17,8 @@ export class ListCompletedTasksComponent implements OnInit {
     for (let i = 0; i < 10; i++) {
       this.tasks.push('task');
     }
+
+    console.log(this.data);
   }
 
   async openModal() {

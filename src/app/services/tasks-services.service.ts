@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable no-underscore-dangle */
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksServicesService {
-  global='http://localhost:1900/api/';
+  global = 'http://localhost:1900/api/';
 
   constructor(private _http: HttpClient) { }
 
@@ -21,4 +23,13 @@ export class TasksServicesService {
 
   }
 
+  getPendingTasks(token) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.get(this.global + 'task/get-pending-tasks', { headers: header });
+  }
+
+  getFinishedTasks(token) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.get(this.global + 'task/get-finished-tasks', { headers: header });
+  }
 }
