@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TokenResponse } from '../models/responseToken.interface';
 import { AuthService } from '../services/auth.service';
 
@@ -9,13 +10,12 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginPage implements OnInit {
   dataUser: any;
-  
 
-  constructor(private authService: AuthService) { 
+  constructor(private authService: AuthService, private router: Router) {
     this.dataUser = {
       username: '',
       password: ''
-    }
+    };
   }
 
   ngOnInit() {
@@ -25,11 +25,12 @@ export class LoginPage implements OnInit {
     this.authService.signin(this.dataUser).subscribe(
       (res: TokenResponse) => {
         localStorage.setItem('token', res.token);
+        this.router.navigate(['/main']);
       },
       err => {
-        console.log(err)
+        console.log(err);
       }
-    )
+    );
     console.log(this.dataUser);
   }
 

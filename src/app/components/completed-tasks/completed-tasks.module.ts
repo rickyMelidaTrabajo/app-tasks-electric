@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { FormCompletedTasksComponent } from './form-completed-tasks/form-completed-tasks.component';
 import { ListCompletedTasksComponent } from './list-completed-tasks/list-completed-tasks.component';
 import { DetailFinishedTaskComponent } from './detail-finished-task/detail-finished-task.component';
+import { ImageSliderComponent } from './image-slider/image-slider.component';
 
 @NgModule({
   declarations: [
     FormCompletedTasksComponent,
     ListCompletedTasksComponent,
-    DetailFinishedTaskComponent
+    DetailFinishedTaskComponent,
+    ImageSliderComponent,
   ],
   exports: [
     FormCompletedTasksComponent,

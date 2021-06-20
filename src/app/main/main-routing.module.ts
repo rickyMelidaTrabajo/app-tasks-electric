@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../canActive/auth.guard';
 
 import { MainPage } from './main.page';
 
@@ -10,11 +11,13 @@ const routes: Routes = [
     children: [
       {
         path: 'tasks',
-        loadChildren: () => import('../pages/tasks/tasks.module').then(m => m.TasksPageModule)
+        loadChildren: () => import('../pages/tasks/tasks.module').then(m => m.TasksPageModule),
+        canActivate: [AuthGuard]
       },
       {
         path: 'add-task',
-        loadChildren: () => import('../pages/add-task/add-task.module').then(m => m.AddTaskPageModule)
+        loadChildren: () => import('../pages/add-task/add-task.module').then(m => m.AddTaskPageModule),
+        canActivate: [AuthGuard]
       },
       {
         path: 'setup',
@@ -22,7 +25,8 @@ const routes: Routes = [
       },
       {
         path: 'login-admin',
-        loadChildren: () => import('../pages/modal-login/modal-login.module').then(m => m.ModalLoginPageModule)
+        loadChildren: () => import('../pages/modal-login/modal-login.module').then(m => m.ModalLoginPageModule),
+        canActivate: [AuthGuard]
       },
       {
         path: '',
