@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { ImageStorageService } from 'src/app/services/image-storage.service';
 import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
 
@@ -14,6 +16,8 @@ export class FormCompletedTasksComponent implements OnInit {
 
   image_before: Array<File> = null;
   image_after: Array<File> = null;
+  urlImageBefore: Observable<string>;
+  urlImageAfter: Observable<string>;
 
   typesTask: string[] = [
     'Rutinas',
@@ -29,7 +33,7 @@ export class FormCompletedTasksComponent implements OnInit {
   selectedQuantity: any;
   taskSelect = 'Rutinas';
 
-  constructor(private taskServices: TasksServicesService) {
+  constructor(private taskServices: TasksServicesService, private storageService: ImageStorageService) {
     this.completedTask = {
       state: 'Finalizado',
       typeTask: '',
@@ -49,7 +53,7 @@ export class FormCompletedTasksComponent implements OnInit {
   save() {
     let data = new FormData();
 
-    for(let i=0;i<this.image_after.length;i++) {
+    for(let i=0;i < this.image_after.length;i++) {
       data.append('data', JSON.stringify(this.completedTask));
       data.append('imageAfter', this.image_after[i], this.image_after[i].name);
       data.append('imageBefore', this.image_before[i], this.image_before[i].name);
@@ -64,6 +68,8 @@ export class FormCompletedTasksComponent implements OnInit {
         console.log(`Error al guardar datos! ${err}`)
       }
     )
+
+    this.uploadImageStorage('imageExample/before');
   }
 
   getImageBefore(event) {
@@ -84,4 +90,16 @@ export class FormCompletedTasksComponent implements OnInit {
     return this.completedTask.hourMan = '00:00';    
   }
 
+  uploadImageStorage(pathfile: string) {
+
+    this.storageService.uploadImageBefore(this.image_before[0], pathfile).snapshotChanges()
+    .subscribe(
+      res=>{
+        console.log(`Subio la imagen`);
+      }, 
+      err=>{
+        console.log(`Error al subir`);
+      }
+    )
+  }
 }
