@@ -1,11 +1,11 @@
 <div class="container">
 
-  <div *ngFor="let task of tasks; let i=index;">
+  <div *ngFor="let task of data; let i=index;">
     <div class="card">
       <div id="task{{i+1}}" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="https://townandcountryremovals.com/wp-content/uploads/2013/10/firefox-logo-200x200.png"
+            <img src="https://townandcountryremovals.com/wp-content/uploads/2013/10/firefox-logo-200x200.png "
               class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
@@ -23,10 +23,11 @@
         </button>
       </div>
       <div class="card-body">
-        <h5 class="card-title">Card title {{ i+1 }}</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-          content.</p>
-        <a class="btn btn-primary" (click)="openModal()">Go somewhere</a>
+        <h5 class="card-title">Tarea # {{ task.taskNumber }}</h5>
+        <p class="card-text">
+          {{ task.description }}
+        </p>
+        <a class="btn btn-primary" (click)="openModal(task)">Ver detalles</a>
       </div>
     </div>
 

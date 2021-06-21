@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { CompletedTask } from 'src/app/models/completedTask.interface';
 
 @Component({
   selector: 'app-detail-finished-task',
@@ -7,11 +8,10 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./detail-finished-task.component.scss'],
 })
 export class DetailFinishedTaskComponent implements OnInit {
-  @Input() data: string;
+  @Input() data: CompletedTask;
 
   constructor(public modalController: ModalController) { }
   ngOnInit() {
-    console.log(this.data);
   }
 
   closeModal() {

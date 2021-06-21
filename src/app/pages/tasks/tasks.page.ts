@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
 interface User {
@@ -16,10 +16,14 @@ interface User {
 })
 export class TasksPage implements OnInit {
   typeTask: string;
-  dataTask: string;
+  dataPendingTask: string;
+  dataFinishedTask: string;
   token: string;
 
-  constructor(public nav: NavController, private taskService: TasksServicesService) { }
+  constructor( public nav: NavController, 
+               private taskService: TasksServicesService,
+               private loadingController: LoadingController
+  ) { }
 
   ngOnInit() {
     this.typeTask = 'completed';
@@ -37,8 +41,8 @@ export class TasksPage implements OnInit {
 
   getPendingTasks() {
     this.taskService.getPendingTasks(this.token).subscribe(
-      res => {
-        console.log(res);
+      (taskPending: any) => {
+        this.dataPendingTask = taskPending.tasks;
       },
       err => {
         console.log(err);
@@ -47,14 +51,25 @@ export class TasksPage implements OnInit {
   }
 
   getFinishedTasks() {
-    this.taskService.getFinishedTasks(this.token).subscribe(
-      (res: any) => {
-        this.dataTask = JSON.stringify(res.tasks);
-      },
-      err => {
+    this.taskService.getFinishedTasks(this.token).toPromise()
+      .then((taskFinished: any)=>{
+        this.dataFinishedTask = taskFinished.tasks;
+      })
+      .catch((err: any)=>{
         console.log(err);
-      }
-    );
+      });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
 }

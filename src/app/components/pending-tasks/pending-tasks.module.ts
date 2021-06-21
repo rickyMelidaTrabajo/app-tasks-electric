@@ -7,13 +7,15 @@ import { FormPendingTasksComponent } from './form-pending-tasks/form-pending-tas
 import { FormsModule } from '@angular/forms';
 import { DetailPendingTaskComponent } from './detail-pending-task/detail-pending-task.component';
 import { CompletedTasksModule } from '../completed-tasks/completed-tasks.module';
+import { FormClosePendingComponent } from './form-close-pending/form-close-pending.component';
 
 
 @NgModule({
   declarations: [
     FormPendingTasksComponent,
     ListPendingTasksComponent,
-    DetailPendingTaskComponent
+    DetailPendingTaskComponent,
+    FormClosePendingComponent
   ],
   exports: [
     FormPendingTasksComponent,

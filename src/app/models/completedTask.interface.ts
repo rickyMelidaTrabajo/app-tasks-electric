@@ -1,22 +1,18 @@
 import { Time } from "@angular/common";
 
 export interface CompletedTask {
-  typeTask: String;
-  state: String;
-  description: String;
-  dateGeneration: Date;
-  dateClosing: Date;
-
-  hourStart: Time;
-  hourEnd: Time;
-  hourMan: Time;
-
-  photoBefore: File;
-  photoAfter: File;
-
-  turn: String,
-  technician: [
-    name: String,
-    position: String
-  ],
+  taskNumber: number,
+  type: string,
+  state: string,
+  description: string,
+  date_generation: Date,
+  date_closing: Date,
+  start_time: string,
+  end_time: string,
+  hour_man: string,
+  imageBefore: string,
+  imageAfter: string,
+  turn: string,
+  name: string,
+  position: string
 }

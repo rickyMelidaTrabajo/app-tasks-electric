@@ -8,5 +8,47 @@
 </ion-header>
 
 <ion-content>
-  <app-form-completed-tasks></app-form-completed-tasks>
+  <div class="container">
+    <div class="row">
+      <div class="table-responsive my-3">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+            <tr>
+              <th scope="col">Tareas #</th>
+              <td>{{ data.taskNumber }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Tipo de Tarea</th>
+              <td>{{ data.type }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Estado</th>
+              <td>{{ data.state }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Descripcion</th>
+              <td>{{ data.description }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Fecha de Gen.</th>
+              <td>{{ data.date_generation }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Tecnico</th>
+              <td>{{ data.name }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Cargo</th>
+              <td>{{ data.position }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Turno</th>
+              <td>{{ data.turn }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </ion-content>

@@ -3,7 +3,7 @@
     <ion-buttons slot="end">
       <div class="text-danger font-weight-bold" (click)="closeModal()">X</div>
     </ion-buttons>
-    <ion-title>Tarea # 36</ion-title>
+    <ion-title>Tarea # {{ data.taskNumber }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,51 +17,51 @@
             <tr>
             <tr>
               <th scope="col">Tareas #</th>
-              <td>37</td>
+              <td>{{ data.taskNumber }}</td>
             </tr>
             <tr>
               <th scope="col">Tipo de Tarea</th>
-              <td>Rutinas</td>
+              <td>{{ data.type }}</td>
             </tr>
             <tr>
               <th scope="col">Estado</th>
-              <td>Finalizado</td>
+              <td>{{ data.state }}</td>
             </tr>
             <tr>
               <th scope="col">Descripcion</th>
-              <td>Rutinas electricas</td>
+              <td>{{ data.description }}</td>
             </tr>
             <tr>
               <th scope="col">Fecha de Gen.</th>
-              <td>21-06-2021</td>
+              <td>{{ data.date_generation }}</td>
             </tr>
             <tr>
               <th scope="col">Fecha de Cierre</th>
-              <td>22-06-2021</td>
+              <td>{{ data.date_closing }}</td>
             </tr>
             <tr>
               <th scope="col">Hora de Inicio</th>
-              <td>22:00</td>
+              <td>{{ data.start_time }}</td>
             </tr>
             <tr>
               <th scope="col">Hora de Cierre</th>
-              <td>23:30</td>
+              <td>{{ data.end_time }}</td>
             </tr>
             <tr>
               <th scope="col">Horas Hombre</th>
-              <td>01:00</td>
+              <td>{{ data.hour_man }}</td>
             </tr>
             <tr>
               <th scope="col">Tecnico</th>
-              <td>Ricardo Melida</td>
+              <td>{{ data.name }}</td>
             </tr>
             <tr>
               <th scope="col">Cargo</th>
-              <td>Junior</td>
+              <td>{{ data.position }}</td>
             </tr>
             <tr>
               <th scope="col">Turno</th>
-              <td>Noche</td>
+              <td>{{ data.turn }}</td>
             </tr>
           </tbody>
         </table>

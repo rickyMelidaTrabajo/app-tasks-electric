@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
+import { CompletedTask } from 'src/app/models/completedTask.interface';
 import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-finished-task.component';
 
 @Component({
@@ -8,30 +9,41 @@ import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-fini
   styleUrls: ['./list-completed-tasks.component.scss'],
 })
 export class ListCompletedTasksComponent implements OnInit {
-  @Input() data: string;
+  @Input() data: Array<CompletedTask>;
 
   tasks: Array<any> = new Array();
-  constructor(public modalController: ModalController) { }
+  constructor(public modalController: ModalController, private loadingController: LoadingController) { }
 
   ngOnInit() {
     for (let i = 0; i < 10; i++) {
       this.tasks.push('task');
     }
-
-    console.log(this.data);
+    this.loading();
   }
 
-  async openModal() {
+  async openModal(task) {
     const modal = await this.modalController.create({
       component: DetailFinishedTaskComponent,
       swipeToClose: true,
       componentProps: {
         // eslint-disable-next-line quote-props
-        'data': 'my data'
+        'data': task
       }
     });
 
     return await modal.present();
+  }
+
+  async loading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando Tareas...',
+      duration: 1000
+    });
+    await loading.present();
+    
+    const { role, data } = await loading.onDidDismiss();
+    this.data;
   }
 
 }

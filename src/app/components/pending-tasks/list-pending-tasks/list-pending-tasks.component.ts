@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { DetailPendingTaskComponent } from '../detail-pending-task/detail-pending-task.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { LoadingController, ModalController } from '@ionic/angular';
+import { CompletedTask } from 'src/app/models/completedTask.interface';
+import { FormClosePendingComponent } from '../form-close-pending/form-close-pending.component';
+import { DetailPendingTaskComponent } from "../detail-pending-task/detail-pending-task.component";
 
 @Component({
   selector: 'app-list-pending-tasks',
@@ -9,25 +11,55 @@ import { DetailPendingTaskComponent } from '../detail-pending-task/detail-pendin
 })
 export class ListPendingTasksComponent implements OnInit {
   tasks: Array<any> = new Array();
+  @Input() data: Array<CompletedTask>; 
+  //@Input() data: Array<any>; 
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private loadingController: LoadingController) { }
 
   ngOnInit() {
     for (let i = 0; i < 10; i++) {
       this.tasks.push('task');
     }
+    this.loading();
   }
 
-  async openModal() {
+  async openModalClosePending(task) {
+    const modal = await this.modalController.create({
+      component: FormClosePendingComponent,
+      swipeToClose: true,
+      componentProps: {
+        // eslint-disable-next-line quote-props
+        'data': task
+      }
+    });
+
+    return await modal.present();
+  }
+
+  async openModalDetails(task) {
     const modal = await this.modalController.create({
       component: DetailPendingTaskComponent,
       swipeToClose: true,
       componentProps: {
         // eslint-disable-next-line quote-props
-        'data': 'my data'
+        'data': task
       }
     });
 
     return await modal.present();
+  }
+
+  
+
+  async loading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando Tareas...',
+      duration: 1000
+    });
+    await loading.present();
+    
+    const { role, data } = await loading.onDidDismiss();
+    this.data;
   }
 }

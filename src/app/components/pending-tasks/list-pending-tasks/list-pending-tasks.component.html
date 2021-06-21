@@ -1,14 +1,16 @@
 <div class="container">
 
-  <div *ngFor="let task of tasks; let i=index;">
+  <div *ngFor="let task of data; let i=index;">
     <div class="card">
       <img src="https://townandcountryremovals.com/wp-content/uploads/2013/10/firefox-logo-200x200.png"
         class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title">Card title {{ i+1 }}</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-          content.</p>
-        <a class="btn btn-primary" (click)="openModal()">Go somewhere</a>
+        <h5 class="card-title">Tarea # {{ task.taskNumber }}</h5>
+        <p class="card-text">
+          {{ task.description }}
+        </p>
+        <a class="btn btn-primary" (click)="openModalDetails(task)">Ver detalles</a>
+        <a class="btn btn-dark" (click)="openModalClosePending(task)">Cerrar Pendiente</a>
       </div>
     </div>
 
