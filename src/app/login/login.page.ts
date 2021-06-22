@@ -27,6 +27,7 @@ export class LoginPage implements OnInit {
   getDataUser() {
     this.authService.signin(this.dataUser).subscribe(
       (res: any) => {
+        localStorage.setItem('username', res.user);
         localStorage.setItem('token', res.token);
         this.router.navigate(['/main']);
       },

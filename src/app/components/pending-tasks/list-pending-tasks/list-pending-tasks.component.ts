@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
-import { CompletedTask } from 'src/app/models/completedTask.interface';
+import { Task } from 'src/app/models/task.interface';
 import { FormClosePendingComponent } from '../form-close-pending/form-close-pending.component';
-import { DetailPendingTaskComponent } from "../detail-pending-task/detail-pending-task.component";
+import { DetailPendingTaskComponent } from '../detail-pending-task/detail-pending-task.component';
 
 @Component({
   selector: 'app-list-pending-tasks',
@@ -11,8 +13,8 @@ import { DetailPendingTaskComponent } from "../detail-pending-task/detail-pendin
 })
 export class ListPendingTasksComponent implements OnInit {
   tasks: Array<any> = new Array();
-  @Input() data: Array<CompletedTask>; 
-  //@Input() data: Array<any>; 
+  @Input() data: Array<Task>;
+  //@Input() data: Array<any>;
 
   constructor(private modalController: ModalController, private loadingController: LoadingController) { }
 
@@ -49,7 +51,7 @@ export class ListPendingTasksComponent implements OnInit {
     return await modal.present();
   }
 
-  
+
 
   async loading() {
     const loading = await this.loadingController.create({
@@ -58,7 +60,7 @@ export class ListPendingTasksComponent implements OnInit {
       duration: 1000
     });
     await loading.present();
-    
+
     const { role, data } = await loading.onDidDismiss();
     this.data;
   }

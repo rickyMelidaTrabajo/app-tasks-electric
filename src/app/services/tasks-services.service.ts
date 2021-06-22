@@ -15,11 +15,14 @@ export class TasksServicesService {
     return this._http.get(this.global + 'api');
   }
 
-  addPendingTask(tasks) {
-    return this._http.post(this.global + 'task/add-finished-task', tasks);
+  addPendingTask(tasks, token) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.post(this.global + 'task/add-pending-task', tasks, { headers: header });
   }
 
-  addFinishedTask() {
+  addFinishedTask(tasks, token) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.post(this.global + 'task/add-finished-task', tasks, { headers: header });
 
   }
 

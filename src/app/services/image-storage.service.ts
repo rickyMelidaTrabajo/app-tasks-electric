@@ -16,6 +16,16 @@ export class ImageStorageService {
   }
 
   uploadImageAfter(image: any, filePath: string) {
+    const fileRef = this.storage.ref(filePath);
+
+    return this.storage.upload(filePath, image);
+  }
+
+  getImageBefore() {
+
+  }
+
+  getImageAfter() {
 
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PendingTask } from 'src/app/models/pendingTask.interface';
+import { Task } from 'src/app/models/task.interface';
+import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
 @Component({
   selector: 'app-form-pending-tasks',
@@ -20,18 +21,16 @@ export class FormPendingTasksComponent implements OnInit {
     'TICS'
   ];
 
-  pendingTask: PendingTask;
+  pendingTask: Task;
 
   selectedQuantity: any;
   taskSelect = 'Rutinas';
-  constructor() {
+  constructor(private taskPendingService: TasksServicesService) {
     this.pendingTask = {
       state: 'Pendiente',
-      typeTask: '',
+      type: '',
       turn: '',
-      description: '',
-      dateGeneration: new Date(),
-      technician: ['Ricardo Melida', 'Junior']
+      description: ''
     };
   }
 
@@ -39,6 +38,13 @@ export class FormPendingTasksComponent implements OnInit {
   }
 
   save() {
+    this.taskPendingService.addPendingTask(this.pendingTask, localStorage.getItem('token'))
+      .subscribe((res: any) => {
+        console.log(res);
+      },
+        (err: any) => {
+          console.log(err);
+        });
     console.log(this.pendingTask);
   }
 

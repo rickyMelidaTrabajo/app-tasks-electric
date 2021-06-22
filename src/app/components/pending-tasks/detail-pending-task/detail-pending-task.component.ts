@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CompletedTask } from 'src/app/models/completedTask.interface';
+import { Task } from 'src/app/models/task.interface';
 
 @Component({
   selector: 'app-detail-pending-task',
@@ -8,8 +8,8 @@ import { CompletedTask } from 'src/app/models/completedTask.interface';
   styleUrls: ['./detail-pending-task.component.scss'],
 })
 export class DetailPendingTaskComponent implements OnInit {
-  @Input() data: CompletedTask;
-  
+  @Input() data: Task;
+
   constructor(private modalController: ModalController) { }
 
   ngOnInit() { }

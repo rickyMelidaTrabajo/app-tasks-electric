@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
@@ -51,25 +52,25 @@ export class FormCompletedTasksComponent implements OnInit {
   }
 
   save() {
-    let data = new FormData();
+    /* const data = new FormData();
 
-    for(let i=0;i < this.image_after.length;i++) {
-      data.append('data', JSON.stringify(this.completedTask));
-      data.append('imageAfter', this.image_after[i], this.image_after[i].name);
-      data.append('imageBefore', this.image_before[i], this.image_before[i].name);
-    }
+     for (let i = 0; i < this.image_after.length; i++) {
+       data.append('data', JSON.stringify(this.completedTask));
+       data.append('imageAfter', this.image_after[i], this.image_after[i].name);
+       data.append('imageBefore', this.image_before[i], this.image_before[i].name);
+     }
 
 
-    this.taskServices.addPendingTask(data).subscribe(
-      res=>{
-        console.log(res);
-      },
-      err=>{
-        console.log(`Error al guardar datos! ${err}`)
-      }
-    )
+     this.taskServices.addFinishedTask(data, localStorage.getItem('token')).subscribe(
+       res => {
+         console.log(res);
+       },
+       err => {
+         console.log(err);
+       }
+     );*/
 
-    this.uploadImageStorage('imageExample/before');
+    this.uploadImageStorage('imageExample/after');
   }
 
   getImageBefore(event) {
@@ -81,25 +82,25 @@ export class FormCompletedTasksComponent implements OnInit {
   }
 
   hoursMan() {
-    if(this.completedTask.hourStart && this.completedTask.hourEnd) {
+    if (this.completedTask.hourStart && this.completedTask.hourEnd) {
       const hourStart = moment(this.completedTask.hourStart, 'HH:mm:ss');
       const hourEnd = moment(this.completedTask.hourEnd, 'HH:mm:ss');
-      
-      return this.completedTask.hourMan = moment.utc(hourEnd.diff(hourStart)).format('HH:mm'); 
+
+      return this.completedTask.hourMan = moment.utc(hourEnd.diff(hourStart)).format('HH:mm');
     }
-    return this.completedTask.hourMan = '00:00';    
+    return this.completedTask.hourMan = '00:00';
   }
 
   uploadImageStorage(pathfile: string) {
 
     this.storageService.uploadImageBefore(this.image_before[0], pathfile).snapshotChanges()
-    .subscribe(
-      res=>{
-        console.log(`Subio la imagen`);
-      }, 
-      err=>{
-        console.log(`Error al subir`);
-      }
-    )
+      .subscribe(
+        res => {
+          console.log(`Subio la imagen`);
+        },
+        err => {
+          console.log(`Error al subir`);
+        }
+      );
   }
 }
