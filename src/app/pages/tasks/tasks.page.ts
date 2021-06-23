@@ -20,15 +20,16 @@ export class TasksPage implements OnInit {
   dataFinishedTask: string;
   token: string;
 
-  constructor( public nav: NavController, 
-               private taskService: TasksServicesService,
-               private loadingController: LoadingController
+  constructor(public nav: NavController,
+    private taskService: TasksServicesService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.typeTask = 'completed';
     this.token = localStorage.getItem('token');
     this.getFinishedTasks();
+    this.getTasks();
   }
 
   closeSession() {
@@ -37,6 +38,16 @@ export class TasksPage implements OnInit {
 
   changeTask(typeTask) {
     typeTask === 'completed' ? this.getFinishedTasks() : this.getPendingTasks();
+  }
+
+  getTasks() {
+    this.taskService.getTasks(this.token).toPromise()
+      .then((tasks: any) => {
+        localStorage.setItem('countTask', tasks.tasks.length);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   }
 
   getPendingTasks() {
@@ -52,10 +63,10 @@ export class TasksPage implements OnInit {
 
   getFinishedTasks() {
     this.taskService.getFinishedTasks(this.token).toPromise()
-      .then((taskFinished: any)=>{
+      .then((taskFinished: any) => {
         this.dataFinishedTask = taskFinished.tasks;
       })
-      .catch((err: any)=>{
+      .catch((err: any) => {
         console.log(err);
       });
   }
@@ -67,7 +78,7 @@ export class TasksPage implements OnInit {
       duration: 2000
     });
     await loading.present();
-    
+
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
   }

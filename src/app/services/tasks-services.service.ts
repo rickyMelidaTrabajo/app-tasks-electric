@@ -35,4 +35,9 @@ export class TasksServicesService {
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this._http.get(this.global + 'task/get-finished-tasks', { headers: header });
   }
+
+  getTasks(token) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.get(this.global + 'task/get-tasks', { headers: header });
+  }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
@@ -52,33 +53,33 @@ export class FormCompletedTasksComponent implements OnInit {
   }
 
   save() {
-    /* const data = new FormData();
+    const data = new FormData();
 
-     for (let i = 0; i < this.image_after.length; i++) {
-       data.append('data', JSON.stringify(this.completedTask));
-       data.append('imageAfter', this.image_after[i], this.image_after[i].name);
-       data.append('imageBefore', this.image_before[i], this.image_before[i].name);
-     }
+    for (let i = 0; i < this.image_after.length; i++) {
+      data.append('image_after', this.image_after[i], this.image_after[i].name);
+      data.append('image_before', this.image_before[i], this.image_before[i].name);
+      data.append('data', JSON.stringify(this.completedTask));
+    }
 
+    this.taskServices.addFinishedTask(data, localStorage.getItem('token')).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
 
-     this.taskServices.addFinishedTask(data, localStorage.getItem('token')).subscribe(
-       res => {
-         console.log(res);
-       },
-       err => {
-         console.log(err);
-       }
-     );*/
-
-    this.uploadImageStorage('imageExample/after');
   }
 
   getImageBefore(event) {
     this.image_before = event.target.files;
+    console.log(this.completedTask);
   }
 
   getImageAfter(event) {
     this.image_after = event.target.files;
+    console.log(this.completedTask);
   }
 
   hoursMan() {
