@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Task {
+  _id?: string;
   taskNumber?: number;
   type: string;
   state: string;
