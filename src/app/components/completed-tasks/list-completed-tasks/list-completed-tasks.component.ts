@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Task } from 'src/app/models/task.interface';
 import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-finished-task.component';
+
+
+// install Swiper modules
 
 @Component({
   selector: 'app-list-completed-tasks',
@@ -44,6 +46,7 @@ export class ListCompletedTasksComponent implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.data;
   }
 
