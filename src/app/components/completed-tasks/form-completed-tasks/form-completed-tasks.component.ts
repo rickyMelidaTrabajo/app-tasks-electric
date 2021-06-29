@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { Message } from 'src/app/models/message.interface';
+import { Task } from 'src/app/models/task.interface';
 import { ImageStorageService } from 'src/app/services/image-storage.service';
 import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
@@ -14,8 +17,7 @@ import { TasksServicesService } from 'src/app/services/tasks-services.service';
 })
 export class FormCompletedTasksComponent implements OnInit {
 
-  completedTask: any;
-
+  completedTask: Task;
   image_before: Array<File> = null;
   image_after: Array<File> = null;
   urlImageBefore: Observable<string>;
@@ -34,19 +36,14 @@ export class FormCompletedTasksComponent implements OnInit {
   ];
   selectedQuantity: any;
   taskSelect = 'Rutinas';
+  message: Message;
 
-  constructor(private taskServices: TasksServicesService, private storageService: ImageStorageService) {
-    this.completedTask = {
-      state: 'Finalizado',
-      typeTask: '',
-      turn: '',
-      hourStart: '',
-      hourEnd: '',
-      hourMan: '',
-      description: '',
-      photoBefore: null,
-      photoAfter: null
-    };
+  constructor(
+    private taskServices: TasksServicesService,
+    private storageService: ImageStorageService,
+    public toastController: ToastController
+  ) {
+    this.reset();
   }
 
   ngOnInit() {
@@ -61,35 +58,40 @@ export class FormCompletedTasksComponent implements OnInit {
       data.append('data', JSON.stringify(this.completedTask));
     }
 
-    this.taskServices.addFinishedTask(data, localStorage.getItem('token')).subscribe(
-      res => {
+    this.taskServices.addFinishedTask(data, localStorage.getItem('token')).toPromise()
+      .then((res: any) => {
         console.log(res);
-      },
-      err => {
-        console.log(err);
-      }
-    );
-
+        this.message = {
+          text: res.message,
+          type: 'success'
+        };
+        this.messageToast(this.message);
+        this.reset();
+      })
+      .catch((err: any) => {
+        this.message = {
+          text: err.message,
+          type: 'danger'
+        };
+      });
   }
 
   getImageBefore(event) {
     this.image_before = event.target.files;
-    console.log(this.completedTask);
   }
 
   getImageAfter(event) {
     this.image_after = event.target.files;
-    console.log(this.completedTask);
   }
 
   hoursMan() {
-    if (this.completedTask.hourStart && this.completedTask.hourEnd) {
-      const hourStart = moment(this.completedTask.hourStart, 'HH:mm:ss');
-      const hourEnd = moment(this.completedTask.hourEnd, 'HH:mm:ss');
+    if (this.completedTask.start_time && this.completedTask.end_time) {
+      const hourStart = moment(this.completedTask.start_time, 'HH:mm:ss');
+      const hourEnd = moment(this.completedTask.end_time, 'HH:mm:ss');
 
-      return this.completedTask.hourMan = moment.utc(hourEnd.diff(hourStart)).format('HH:mm');
+      return this.completedTask.hour_man = moment.utc(hourEnd.diff(hourStart)).format('HH:mm');
     }
-    return this.completedTask.hourMan = '00:00';
+    return this.completedTask.hour_man = '00:00';
   }
 
   uploadImageStorage(pathfile: string) {
@@ -103,5 +105,27 @@ export class FormCompletedTasksComponent implements OnInit {
           console.log(`Error al subir`);
         }
       );
+  }
+
+  reset() {
+    this.completedTask = {
+      type: 'Rutinas',
+      description: '',
+      start_time: '',
+      end_time: '',
+      hour_man: '',
+      turn: '',
+    };
+    this.image_before = null;
+    this.image_after = null;
+  }
+
+  async messageToast(message: Message) {
+    const toast = await this.toastController.create({
+      message: message.text,
+      duration: 2000,
+      color: message.type
+    });
+    toast.present();
   }
 }

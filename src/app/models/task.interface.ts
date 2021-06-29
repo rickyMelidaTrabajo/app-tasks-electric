@@ -2,7 +2,7 @@
 export interface Task {
   taskNumber?: number;
   type: string;
-  state: string;
+  state?: string;
   description: string;
   date_generation?: Date;
   date_closing?: Date;
