@@ -2,9 +2,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Task } from 'src/app/models/task.interface';
 import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-finished-task.component';
+import { IonInfiniteScroll } from '@ionic/angular';
 
-
-// install Swiper modules
 
 @Component({
   selector: 'app-list-completed-tasks',
@@ -12,13 +11,14 @@ import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-fini
   styleUrls: ['./list-completed-tasks.component.scss'],
 })
 export class ListCompletedTasksComponent implements OnInit {
+  @ViewChild( IonInfiniteScroll ,{static:false} ) infiniteScroll: IonInfiniteScroll;
   @Input() data: Array<Task>;
-
   tasks: Array<any> = new Array();
+  
   constructor(public modalController: ModalController, private loadingController: LoadingController) { }
 
   ngOnInit() {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
       this.tasks.push('task');
     }
     this.loading();
@@ -29,7 +29,6 @@ export class ListCompletedTasksComponent implements OnInit {
       component: DetailFinishedTaskComponent,
       swipeToClose: true,
       componentProps: {
-        // eslint-disable-next-line quote-props
         'data': task
       }
     });
@@ -46,8 +45,24 @@ export class ListCompletedTasksComponent implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.data;
+  }
+
+  loadData(event) {
+    console.log(`Cargando..!`);
+
+    if(this.tasks.length > 50) {
+      event.target.complete();
+      this.infiniteScroll.disabled = true;
+      return;
+    }
+
+    setTimeout(()=>{
+      for (let i = 0; i < 10; i++) {
+        this.tasks.push('task');
+      }
+      event.target.complete();
+    }, 1000);
   }
 
 }

@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div *ngFor="let task of data; let i=index;">
+  <!--div *ngFor="let task of data; let i=index;">
     <div id="task-{{i+1}}" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
@@ -35,5 +35,19 @@
     </div>
 
 
-  </div>
+  </div-->
+
+    <div *ngFor="let item of tasks;let i=index;" class="my-5">
+      <p class="my-5"> Item {{ i + 1 }} </p>
+    </div>
+    <ion-infinite-scroll threshold="150px" 
+                        (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando Tareas...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </div>
+
+
+
