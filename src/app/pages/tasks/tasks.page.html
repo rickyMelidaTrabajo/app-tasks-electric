@@ -8,6 +8,11 @@
 </ion-header>
 
 <ion-content>
+  <div class="btn-up" #btnUp (click)="btnUpEvent">
+    <!-- <ion-icon name="chevron-up-outline"></ion-icon> -->
+    ^
+  </div>
+
   <ion-item>
     <ion-label>Tipo de tarea</ion-label>
     <ion-select (ngModelChange)="changeTask($event)" [(ngModel)]="typeTask">
@@ -15,6 +20,22 @@
       <ion-select-option value="completed">Finalizadas</ion-select-option>
     </ion-select>
   </ion-item>
+
+  <div class="search">
+    <input type="search" class="form-control" id="search" placeholder="Buscar">
+    <div class="select">
+      <ion-item>
+        <!-- <ion-label>Filtro</ion-label> -->
+        <ion-select interface="popover" (ngModelChange)="searchBy($event)" [(ngModel)]="search">
+          <ion-select-option value="filter">Filtro</ion-select-option>
+          <ion-select-option value="type-task">Tipo de Tarea</ion-select-option>
+          <ion-select-option value="turn">Turno</ion-select-option>
+          <ion-select-option value="technician">Técnico</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+  </div>
 
   <ion-item *ngIf="typeTask == 'completed'; else pending">
     <app-list-completed-tasks [data]="dataFinishedTask"></app-list-completed-tasks>
@@ -26,6 +47,5 @@
     </ion-item>
   </ng-template>
 
-  
 
 </ion-content>

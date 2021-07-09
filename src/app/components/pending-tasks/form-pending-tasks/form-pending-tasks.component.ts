@@ -27,6 +27,9 @@ export class FormPendingTasksComponent implements OnInit {
   taskSelect = 'Rutinas';
   message: Message;
 
+  alertError = false;
+  messageError: Array<string>;
+
   constructor(private taskPendingService: TasksServicesService, public toastController: ToastController) {
     this.pendingTask = {
       state: 'Pendiente',
@@ -40,17 +43,29 @@ export class FormPendingTasksComponent implements OnInit {
   }
 
   save() {
-    this.taskPendingService.addPendingTask(this.pendingTask, localStorage.getItem('token'))
-      .subscribe((res: any) => {
-        this.message.text = res.message;
-        this.message.type = 'success';
-        this.messageToast(this.message);
-        this.reset();
-      },
-        (err: any) => {
-          this.message.text = err.message;
-          this.message.type = 'danger';
-        });
+    this.messageError = new Array();
+    const validateForm = this.validateForm(this.pendingTask);
+
+    if (validateForm.length === 0) {
+
+      this.taskPendingService.addPendingTask(this.pendingTask, localStorage.getItem('token'))
+        .subscribe((res: any) => {
+          this.message.text = res.message;
+          this.message.type = 'success';
+          this.messageToast(this.message);
+          this.reset();
+        },
+          (err: any) => {
+            this.message.text = err.message;
+            this.message.type = 'danger';
+          });
+    } else {
+      this.alertError = true;
+      for (const err of validateForm) {
+        this.messageError.push(err);
+      }
+    }
+
   }
 
   reset() {
@@ -68,4 +83,11 @@ export class FormPendingTasksComponent implements OnInit {
     toast.present();
   }
 
+  validateForm(data: Task) {
+    const error: Array<string> = new Array();
+    if (data.turn === '') { error.push('Falta agregar el turno'); }
+    if (data.description === '') { error.push('Falta agregar la descripcion'); }
+
+    return error;
+  }
 }

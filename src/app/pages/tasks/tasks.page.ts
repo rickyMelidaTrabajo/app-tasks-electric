@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
 import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
@@ -15,10 +16,13 @@ interface User {
   styleUrls: ['./tasks.page.scss'],
 })
 export class TasksPage implements OnInit {
+  @ViewChild('btnUp', { static: false }) btnUp: ElementRef;
+
   typeTask: string;
   dataPendingTask: string;
   dataFinishedTask: string;
   token: string;
+  search: any;
 
   constructor(public nav: NavController,
     private taskService: TasksServicesService,
@@ -27,6 +31,7 @@ export class TasksPage implements OnInit {
 
   ngOnInit() {
     this.typeTask = 'completed';
+    this.search = 'filter';
     this.token = localStorage.getItem('token');
     this.getFinishedTasks();
     this.getTasks();
@@ -83,4 +88,11 @@ export class TasksPage implements OnInit {
     console.log('Loading dismissed!');
   }
 
+  btnUpEvent() {
+    this.btnUp.nativeElement.scrollTop;
+  }
+
+  searchBy(event) {
+    console.log(event);
+  }
 }
