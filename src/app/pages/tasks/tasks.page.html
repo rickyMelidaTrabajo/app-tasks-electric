@@ -21,17 +21,21 @@
     </ion-select>
   </ion-item>
 
-  <ion-item>
-    <ion-label>Gaming</ion-label>
-    <ion-select interface="popover">
-      <ion-select-option value="nes">NES</ion-select-option>
-      <ion-select-option value="n64">Nintendo64</ion-select-option>
-      <ion-select-option value="ps">PlayStation</ion-select-option>
-      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-      <ion-select-option value="snes">SNES</ion-select-option>
-    </ion-select>
-  </ion-item>
+  <div class="search">
+    <input type="search" class="form-control" id="search" placeholder="Buscar">
+    <div class="select">
+      <ion-item>
+        <!-- <ion-label>Filtro</ion-label> -->
+        <ion-select interface="popover" (ngModelChange)="searchBy($event)" [(ngModel)]="search">
+          <ion-select-option value="filter">Filtro</ion-select-option>
+          <ion-select-option value="type-task">Tipo de Tarea</ion-select-option>
+          <ion-select-option value="turn">Turno</ion-select-option>
+          <ion-select-option value="technician">Técnico</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+  </div>
 
   <ion-item *ngIf="typeTask == 'completed'; else pending">
     <app-list-completed-tasks [data]="dataFinishedTask"></app-list-completed-tasks>

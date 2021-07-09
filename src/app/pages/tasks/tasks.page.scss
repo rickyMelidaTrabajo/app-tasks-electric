@@ -16,3 +16,19 @@
   box-shadow: -2px 1px 5px rgb(157, 216, 243);
   text-shadow: -2px 3px 18px rgb(59, 54, 54);
 }
+
+.search {
+  margin: 10px 0;
+}
+
+#search {
+  width: 60%;
+  margin-left: 15px;
+}
+
+.select {
+  width: 35%;
+  position: absolute;
+  top: 48px;
+  right: 0;
+}

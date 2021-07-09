@@ -22,6 +22,7 @@ export class TasksPage implements OnInit {
   dataPendingTask: string;
   dataFinishedTask: string;
   token: string;
+  search: any;
 
   constructor(public nav: NavController,
     private taskService: TasksServicesService,
@@ -30,6 +31,7 @@ export class TasksPage implements OnInit {
 
   ngOnInit() {
     this.typeTask = 'completed';
+    this.search = 'filter';
     this.token = localStorage.getItem('token');
     this.getFinishedTasks();
     this.getTasks();
@@ -90,4 +92,7 @@ export class TasksPage implements OnInit {
     this.btnUp.nativeElement.scrollTop;
   }
 
+  searchBy(event) {
+    console.log(event);
+  }
 }
