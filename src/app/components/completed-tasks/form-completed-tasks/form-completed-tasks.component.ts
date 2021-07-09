@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
@@ -38,6 +39,9 @@ export class FormCompletedTasksComponent implements OnInit {
   taskSelect = 'Rutinas';
   message: Message;
 
+  alertError = false;
+  messageError: Array<string>;
+
   constructor(
     private taskServices: TasksServicesService,
     private storageService: ImageStorageService,
@@ -50,30 +54,42 @@ export class FormCompletedTasksComponent implements OnInit {
   }
 
   save() {
-    const data = new FormData();
+    this.messageError = new Array();
+    const validateForm = this.validateForm(this.completedTask, this.image_before, this.image_after);
 
-    for (let i = 0; i < this.image_after.length; i++) {
-      data.append('image_after', this.image_after[i], this.image_after[i].name);
-      data.append('image_before', this.image_before[i], this.image_before[i].name);
-      data.append('data', JSON.stringify(this.completedTask));
+    if (validateForm.length === 0) {
+      const data = new FormData();
+
+      for (let i = 0; i < this.image_after.length; i++) {
+        data.append('image_after', this.image_after[i], this.image_after[i].name);
+        data.append('image_before', this.image_before[i], this.image_before[i].name);
+        data.append('data', JSON.stringify(this.completedTask));
+      }
+
+      this.taskServices.addFinishedTask(data, localStorage.getItem('token')).toPromise()
+        .then((res: any) => {
+          console.log(res);
+          this.message = {
+            text: res.message,
+            type: 'success'
+          };
+          this.messageToast(this.message);
+          this.reset();
+        })
+        .catch((err: any) => {
+          this.message = {
+            text: err.message,
+            type: 'danger'
+          };
+        });
+
+    } else {
+      this.alertError = true;
+      for (const err of validateForm) {
+        this.messageError.push(err);
+      }
     }
 
-    this.taskServices.addFinishedTask(data, localStorage.getItem('token')).toPromise()
-      .then((res: any) => {
-        console.log(res);
-        this.message = {
-          text: res.message,
-          type: 'success'
-        };
-        this.messageToast(this.message);
-        this.reset();
-      })
-      .catch((err: any) => {
-        this.message = {
-          text: err.message,
-          type: 'danger'
-        };
-      });
   }
 
   getImageBefore(event) {
@@ -127,5 +143,17 @@ export class FormCompletedTasksComponent implements OnInit {
       color: message.type
     });
     toast.present();
+  }
+
+  validateForm(data: Task, imageBefore: Array<File>, imageAfter: Array<File>) {
+    const error: Array<string> = new Array();
+    if (data.turn === '') { error.push('Falta agregar el turno'); }
+    if (data.start_time === '') { error.push('Falta agregar la hora de inicio'); }
+    if (data.end_time === '') { error.push('Falta agregar la hora final'); }
+    if (data.description === '') { error.push('Falta agregar la descripcion'); }
+    if (imageBefore === null) { error.push('Falta la imagen del antes'); }
+    if (imageAfter === null) { error.push('Falta la imagen del despues'); }
+
+    return error;
   }
 }

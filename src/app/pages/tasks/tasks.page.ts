@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
 import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
@@ -15,6 +16,8 @@ interface User {
   styleUrls: ['./tasks.page.scss'],
 })
 export class TasksPage implements OnInit {
+  @ViewChild('btnUp', { static: false }) btnUp: ElementRef;
+
   typeTask: string;
   dataPendingTask: string;
   dataFinishedTask: string;
@@ -81,6 +84,10 @@ export class TasksPage implements OnInit {
 
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+  }
+
+  btnUpEvent() {
+    this.btnUp.nativeElement.scrollTop;
   }
 
 }

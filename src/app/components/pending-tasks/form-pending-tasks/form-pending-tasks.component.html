@@ -35,6 +35,16 @@
         <div class="d-grid gap-2">
           <button class="btn btn-primary" type="submit">Guardar</button>
         </div>
+
+        <div *ngIf="alertError">
+          <div class="col-md-8 offset-md-4 mt-3">
+            <div class="alert alert-danger" role="alert">
+              <ul *ngFor="let err of messageError">
+                <li>{{ err }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </form>

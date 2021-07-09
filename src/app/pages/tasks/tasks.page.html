@@ -8,11 +8,28 @@
 </ion-header>
 
 <ion-content>
+  <div class="btn-up" #btnUp (click)="btnUpEvent">
+    <!-- <ion-icon name="chevron-up-outline"></ion-icon> -->
+    ^
+  </div>
+
   <ion-item>
     <ion-label>Tipo de tarea</ion-label>
     <ion-select (ngModelChange)="changeTask($event)" [(ngModel)]="typeTask">
       <ion-select-option value="pending">Pendientes</ion-select-option>
       <ion-select-option value="completed">Finalizadas</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Gaming</ion-label>
+    <ion-select interface="popover">
+      <ion-select-option value="nes">NES</ion-select-option>
+      <ion-select-option value="n64">Nintendo64</ion-select-option>
+      <ion-select-option value="ps">PlayStation</ion-select-option>
+      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+      <ion-select-option value="snes">SNES</ion-select-option>
     </ion-select>
   </ion-item>
 
@@ -25,5 +42,7 @@
       <app-list-pending-tasks [data]="dataPendingTask"></app-list-pending-tasks>
     </ion-item>
   </ng-template>
+
+
 
 </ion-content>
