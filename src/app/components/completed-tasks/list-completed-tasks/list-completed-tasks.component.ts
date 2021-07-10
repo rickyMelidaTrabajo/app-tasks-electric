@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Task } from 'src/app/models/task.interface';
@@ -11,10 +13,13 @@ import { IonInfiniteScroll } from '@ionic/angular';
   styleUrls: ['./list-completed-tasks.component.scss'],
 })
 export class ListCompletedTasksComponent implements OnInit {
-  @ViewChild( IonInfiniteScroll ,{static:false} ) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
   @Input() data: Array<Task>;
+  tasksPartial: Array<Task> = new Array();
+  index = 0;
+
   tasks: Array<any> = new Array();
-  
+
   constructor(public modalController: ModalController, private loadingController: LoadingController) { }
 
   ngOnInit() {
@@ -22,6 +27,7 @@ export class ListCompletedTasksComponent implements OnInit {
       this.tasks.push('task');
     }
     this.loading();
+    //this.loadPartialData(this.index);
   }
 
   async openModal(task) {
@@ -29,7 +35,7 @@ export class ListCompletedTasksComponent implements OnInit {
       component: DetailFinishedTaskComponent,
       swipeToClose: true,
       componentProps: {
-        'data': task
+        data: task
       }
     });
 
@@ -45,24 +51,27 @@ export class ListCompletedTasksComponent implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    this.data;
+    this.loadPartialData(this.index);
   }
 
   loadData(event) {
-    console.log(`Cargando..!`);
-
-    if(this.tasks.length > 50) {
+    if (this.tasksPartial.length === this.data.length) {
       event.target.complete();
       this.infiniteScroll.disabled = true;
       return;
     }
 
-    setTimeout(()=>{
-      for (let i = 0; i < 10; i++) {
-        this.tasks.push('task');
-      }
+    setTimeout(() => {
+      this.loadPartialData(this.index);
       event.target.complete();
     }, 1000);
+
+    this.index = + 5;
   }
 
+  loadPartialData(lastItem) {
+    for (let i = lastItem; i < lastItem + 5; i++) {
+      this.tasksPartial.push(this.data[i]);
+    }
+  }
 }
