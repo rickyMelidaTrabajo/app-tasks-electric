@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div *ngFor="let task of data; let i=index;">
+  <div *ngFor="let task of tasksPartial; let i=index;">
     <div class="card">
       <img src="https://townandcountryremovals.com/wp-content/uploads/2013/10/firefox-logo-200x200.png"
         class="card-img-top" alt="...">
@@ -15,5 +15,10 @@
     </div>
 
   </div>
+
+  <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando Tareas...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </div>
