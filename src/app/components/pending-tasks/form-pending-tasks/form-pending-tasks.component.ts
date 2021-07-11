@@ -25,7 +25,10 @@ export class FormPendingTasksComponent implements OnInit {
   pendingTask: Task;
   selectedQuantity: any;
   taskSelect = 'Rutinas';
-  message: Message;
+  message: Message = {
+    text: '',
+    type: ''
+  };
 
   alertError = false;
   messageError: Array<string>;

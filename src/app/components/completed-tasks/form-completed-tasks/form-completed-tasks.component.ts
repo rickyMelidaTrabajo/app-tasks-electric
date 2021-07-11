@@ -37,7 +37,10 @@ export class FormCompletedTasksComponent implements OnInit {
   ];
   selectedQuantity: any;
   taskSelect = 'Rutinas';
-  message: Message;
+  message: Message = {
+    text: '',
+    type: ''
+  };
 
   alertError = false;
   messageError: Array<string>;

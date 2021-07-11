@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
+import { Task } from 'src/app/models/task.interface';
 import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
 interface User {
@@ -19,8 +20,8 @@ export class TasksPage implements OnInit {
   @ViewChild('btnUp', { static: false }) btnUp: ElementRef;
 
   typeTask: string;
-  dataPendingTask: string;
-  dataFinishedTask: string;
+  dataPendingTask: Array<Task>;
+  dataFinishedTask: Array<Task>;
   token: string;
   search: any;
 

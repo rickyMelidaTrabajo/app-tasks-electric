@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
@@ -15,16 +16,13 @@ import { IonInfiniteScroll } from '@ionic/angular';
 export class ListPendingTasksComponent implements OnInit {
   @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
   @Input() data: Array<Task>;
-  tasks: Array<any> = new Array();
+  existTasks: boolean;
 
   tasksPartial: Array<Task> = new Array();
   index = 0;
   constructor(private modalController: ModalController, private loadingController: LoadingController) { }
 
   ngOnInit() {
-    for (let i = 0; i < 10; i++) {
-      this.tasks.push('task');
-    }
     this.loading();
   }
 
@@ -63,8 +61,12 @@ export class ListPendingTasksComponent implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    this.loadPartialData(this.index);
-    console.log(this.data);
+    if (this.data !== undefined) {
+      this.existTasks = true;
+      this.loadPartialData();
+    } else {
+      this.existTasks = false;
+    }
   }
 
   loadData(event) {
@@ -75,16 +77,22 @@ export class ListPendingTasksComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.loadPartialData(this.index);
+      this.loadPartialData();
       event.target.complete();
     }, 1000);
-
-    this.index = + 5;
   }
 
-  loadPartialData(lastItem) {
-    for (let i = lastItem; i < lastItem + 5; i++) {
-      this.tasksPartial.push(this.data[i]);
+  loadPartialData() {
+    if (this.data.length <= 5) {
+      for (let i = 0; i <= this.data.length; i++) {
+        this.tasksPartial.push(this.data.shift());
+      }
+      if (this.data.length === 0) {
+        this.infiniteScroll.disabled = true;
+      }
+    } else {
+      this.tasksPartial = this.data.splice(0, 5);
+
     }
   }
 }
