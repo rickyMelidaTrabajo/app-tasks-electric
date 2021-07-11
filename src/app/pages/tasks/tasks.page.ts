@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
 import { Task } from 'src/app/models/task.interface';
 import { TasksServicesService } from 'src/app/services/tasks-services.service';
@@ -17,7 +17,7 @@ interface User {
   styleUrls: ['./tasks.page.scss'],
 })
 export class TasksPage implements OnInit {
-  @ViewChild('btnUp', { static: false }) btnUp: ElementRef;
+  @HostListener('window:scroll')
 
   typeTask: string;
   dataPendingTask: Array<Task>;
@@ -90,7 +90,15 @@ export class TasksPage implements OnInit {
   }
 
   btnUpEvent() {
-    this.btnUp.nativeElement.scrollTop;
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+    console.log('[scroll]', scrollPosition);
+
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   searchBy(event) {
