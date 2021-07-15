@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-hour-report',
@@ -11,11 +12,24 @@ export class HourReportPage implements OnInit {
     'work-type',
     'assistance',
     'mantenimie'
-  ]
-  constructor() { }
+  ];
+  constructor(private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.typeTask = 'rutinas';
+    this.loading();
+  }
+
+  async loading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando Tareas...',
+      duration: 1000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+
   }
 
 }

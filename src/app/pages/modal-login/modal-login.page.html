@@ -12,13 +12,20 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" width="100">
     <strong>Admin</strong>
     <div>
-      <input type="text" name="" id="" placeholder="Usuario">
+      <input type="text" name="username" #username="ngModel" [(ngModel)]="dataAdmin.username" placeholder="Usuario">
     </div>
 
     <div>
-      <input type="text" name="" id="" placeholder="Contraseña">
+      <input type="password" name="password" #password="ngModel" [(ngModel)]="dataAdmin.password"
+        placeholder="Contraseña">
     </div>
 
-    <button>Ingresar</button>
+    <input class="button" type="submit" (click)="authAdmin()" value='Ingresar'>
   </div>
+
 </ion-content>
+<div class="container">
+  <div class="alert alert-danger" role="alert">
+    Debes iniciar sesión como administrador, para ver esta sección.
+  </div>
+</div>

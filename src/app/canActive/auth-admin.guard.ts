@@ -12,25 +12,30 @@ export class AuthAdminGuard implements CanActivate {
 
   redirect(flag: boolean): any {
     if (!flag) {
-      this.router.navigate(['/', 'main']);
+      this.router.navigate(['main', 'login-admin']);
     }
   }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const tokenValidate = false;
-    const token = localStorage.getItem('token');
+    let tokenValidate;
+    const token = localStorage.getItem('token-admin');
 
-    this.redirect(tokenValidate);
 
     this.authService.adminValidate(token)
       .toPromise()
-      .then(res => {
+      .then((res: any) => {
         console.log(res);
+        tokenValidate = res.data.rol === 'Admin' ? true : false;
       })
       .catch(error => {
-        console.log(error);
+        tokenValidate = false;
       });
+
+    //this.redirect(tokenValidate);
+
+    console.log(tokenValidate);
 
     return tokenValidate;
   }

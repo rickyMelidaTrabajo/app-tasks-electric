@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   adminValidate(token: any) {
-    return this._http.get(this.global + 'admin/verify-token?token=' + token);
+    return this._http.get('http://localhost:1900/api/admin/verify-token?token=' + token);
   }
 
 }
