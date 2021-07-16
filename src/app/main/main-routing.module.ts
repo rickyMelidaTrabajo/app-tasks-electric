@@ -29,6 +29,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'admin',
+        loadChildren: () => import('../pages-admin/main-admin/main-admin.module').then(m => m.MainAdminPageModule),
+        canActivate: [AuthGuard]
+      },
+      {
         path: '',
         redirectTo: '/main/tasks'
       }

@@ -35,13 +35,10 @@ export class ModalLoginPage implements OnInit {
   authAdmin() {
     this.authService.signin(this.dataAdmin).subscribe(
       (res: any) => {
-        console.log(res.rol);
         if (res.rol === 'Admin') {
           localStorage.setItem('token-admin', res.token);
-          window.location.href = 'http://localhost:8100/main-admin';
+          this.router.navigate(['main', 'admin']);
         }
-
-
       },
       (err: any) => {
         console.log(err);
