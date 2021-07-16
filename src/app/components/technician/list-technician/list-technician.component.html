@@ -14,32 +14,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                  <ion-icon name="create" color="tertiary"></ion-icon>
-                </td>
-                <td>
-                  <ion-icon name="trash" color="danger"></ion-icon>
-                </td>
-              </tr>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                  <ion-icon name="create" color="tertiary"></ion-icon>
-                </td>
-                <td>
-                  <ion-icon name="trash" color="danger"></ion-icon>
-                </td>
-              </tr>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+              <tr *ngFor="let tech of technicians">
+                <td>{{ tech.name }}</td>
+                <td>{{ tech.position }}</td>
+                <td>{{ tech.turn }}</td>
                 <td>
                   <ion-icon name="create" color="tertiary"></ion-icon>
                 </td>
