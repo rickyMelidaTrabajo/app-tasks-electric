@@ -14,32 +14,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td><input type="password" value="12cscscs35" id=""  disabled></td>
-                <td>
-                  <ion-icon name="create" color="tertiary"></ion-icon>
-                </td>
-                <td>
-                  <ion-icon name="trash" color="danger"></ion-icon>
-                </td>
-              </tr>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td><input type="password" value="123cdscsc5" id="" disabled></td>
-                <td>
-                  <ion-icon name="create" color="tertiary"></ion-icon>
-                </td>
-                <td>
-                  <ion-icon name="trash" color="danger"></ion-icon>
-                </td>
-              </tr>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td><input type="password" value="12cscscs35" id="" disabled></td>
+              <tr *ngFor="let user of users">
+                <td>Nombre</td>
+                <td>{{ user.username }}</td>
+                <td><input type="password" value="{{ user.password }}" id=""  disabled></td>
                 <td>
                   <ion-icon name="create" color="tertiary"></ion-icon>
                 </td>

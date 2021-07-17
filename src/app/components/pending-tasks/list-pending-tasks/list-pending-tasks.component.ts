@@ -7,6 +7,7 @@ import { Task } from 'src/app/models/task.interface';
 import { FormClosePendingComponent } from '../form-close-pending/form-close-pending.component';
 import { DetailPendingTaskComponent } from '../detail-pending-task/detail-pending-task.component';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { TasksServicesService } from 'src/app/services/tasks-services.service';
 
 @Component({
   selector: 'app-list-pending-tasks',
@@ -15,28 +16,78 @@ import { IonInfiniteScroll } from '@ionic/angular';
 })
 export class ListPendingTasksComponent implements OnInit {
   @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
-  @Input() data: Array<Task>;
+
+  pendingTasks: Array<Task> = new Array();
+  tasksPartial: Array<Task> = new Array();
   existTasks: boolean;
 
-  tasksPartial: Array<Task> = new Array();
-  index = 0;
-  constructor(private modalController: ModalController, private loadingController: LoadingController) { }
+  constructor( private modalController: ModalController, 
+               private loadingController: LoadingController, 
+               private tasks: TasksServicesService
+  ) { }
 
   ngOnInit() {
     this.loading();
   }
-
-  async openModalClosePending(task) {
-    const modal = await this.modalController.create({
-      component: FormClosePendingComponent,
-      swipeToClose: true,
-      componentProps: {
-        // eslint-disable-next-line quote-props
-        'data': task
-      }
+ 
+  async loading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando Tareas...',
+      duration: 1000
     });
+    await loading.present();
 
-    return await modal.present();
+    const { role, data } = await loading.onDidDismiss();
+    this.getTasks()
+      .then((res: any)=>{
+        this.pendingTasks = res.tasks;
+        
+        if (this.pendingTasks !== undefined) {
+          this.loadPartialData();
+          this.existTasks = true;
+        } else {
+          this.existTasks = false;
+        }
+      })
+      .catch(err=>{
+        console.log(err); 
+      })
+  }
+
+  getTasks() {
+    return this.tasks.getPendingTasks(localStorage.getItem('token')).toPromise();
+  }
+  
+  loadPartialData() {
+    if (this.pendingTasks.length <= 5) {
+      for (const key in this.pendingTasks) {
+        this.tasksPartial.push(this.pendingTasks[key]);
+      }
+    } else {
+      this.tasksPartial = this.pendingTasks.splice(0, 5);
+    }
+  }
+
+  loadMoreData(event) {
+    if (this.tasksPartial.length === this.pendingTasks.length) {
+      return event.target.complete();
+    }else {
+      if(this.pendingTasks.length >= 5) {
+        this.tasksPartial.push(...this.pendingTasks.splice(0, 5));
+      }else {
+        this.tasksPartial.push(...this.pendingTasks.splice(0, this.pendingTasks.length));
+        return event.target.complete();
+      }
+    }
+
+
+  }
+
+  loadData(event) {
+    setTimeout(() => {
+      this.loadMoreData(event);
+    }, 1000);
   }
 
   async openModalDetails(task) {
@@ -52,47 +103,16 @@ export class ListPendingTasksComponent implements OnInit {
     return await modal.present();
   }
 
-  async loading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Cargando Tareas...',
-      duration: 1000
+  async openModalClosePending(task) {
+    const modal = await this.modalController.create({
+      component: FormClosePendingComponent,
+      swipeToClose: true,
+      componentProps: {
+        // eslint-disable-next-line quote-props
+        'data': task
+      }
     });
-    await loading.present();
 
-    const { role, data } = await loading.onDidDismiss();
-    if (this.data !== undefined) {
-      this.existTasks = true;
-      this.loadPartialData();
-    } else {
-      this.existTasks = false;
-    }
-  }
-
-  loadData(event) {
-    if (this.tasksPartial.length === this.data.length) {
-      event.target.complete();
-      this.infiniteScroll.disabled = true;
-      return;
-    }
-
-    setTimeout(() => {
-      this.loadPartialData();
-      event.target.complete();
-    }, 1000);
-  }
-
-  loadPartialData() {
-    if (this.data.length <= 5) {
-      for (let i = 0; i <= this.data.length; i++) {
-        this.tasksPartial.push(this.data.shift());
-      }
-      if (this.data.length === 0) {
-        this.infiniteScroll.disabled = true;
-      }
-    } else {
-      this.tasksPartial = this.data.splice(0, 5);
-
-    }
+    return await modal.present();
   }
 }

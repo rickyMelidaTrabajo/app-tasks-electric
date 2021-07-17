@@ -15,7 +15,7 @@
 
   <ion-item>
     <ion-label>Tipo de tarea</ion-label>
-    <ion-select (ngModelChange)="changeTask($event)" [(ngModel)]="typeTask">
+    <ion-select [(ngModel)]="typeTask">
       <ion-select-option value="pending">Pendientes</ion-select-option>
       <ion-select-option value="completed">Finalizadas</ion-select-option>
     </ion-select>
@@ -38,12 +38,12 @@
   </div>
 
   <ion-item *ngIf="typeTask == 'completed'; else pending">
-    <app-list-completed-tasks [data]="dataFinishedTask"></app-list-completed-tasks>
+    <app-list-completed-tasks></app-list-completed-tasks>
   </ion-item>
 
   <ng-template #pending>
     <ion-item>
-      <app-list-pending-tasks [data]="dataPendingTask"></app-list-pending-tasks>
+      <app-list-pending-tasks></app-list-pending-tasks>
     </ion-item>
   </ng-template>
 

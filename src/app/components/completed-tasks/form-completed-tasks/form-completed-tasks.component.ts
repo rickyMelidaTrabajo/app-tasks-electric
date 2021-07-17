@@ -80,6 +80,7 @@ export class FormCompletedTasksComponent implements OnInit {
           this.reset();
         })
         .catch((err: any) => {
+          console.log(err);
           this.message = {
             text: err.message,
             type: 'danger'

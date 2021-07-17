@@ -34,48 +34,14 @@ export class TasksPage implements OnInit {
     this.typeTask = 'completed';
     this.search = 'filter';
     this.token = localStorage.getItem('token');
-    this.getFinishedTasks();
-    this.getTasks();
   }
 
   closeSession() {
     this.nav.navigateBack('/login');
   }
 
-  changeTask(typeTask) {
-    typeTask === 'completed' ? this.getFinishedTasks() : this.getPendingTasks();
-  }
 
-  getTasks() {
-    this.taskService.getTasks(this.token).toPromise()
-      .then((tasks: any) => {
-        localStorage.setItem('countTask', tasks.tasks.length);
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-  }
 
-  getPendingTasks() {
-    this.taskService.getPendingTasks(this.token).subscribe(
-      (taskPending: any) => {
-        this.dataPendingTask = taskPending.tasks;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  getFinishedTasks() {
-    this.taskService.getFinishedTasks(this.token).toPromise()
-      .then((taskFinished: any) => {
-        this.dataFinishedTask = taskFinished.tasks;
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-  }
 
   async presentLoading() {
     const loading = await this.loadingController.create({
