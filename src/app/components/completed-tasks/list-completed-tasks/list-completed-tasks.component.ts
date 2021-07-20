@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 /* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -7,6 +8,7 @@ import { Task } from 'src/app/models/task.interface';
 import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-finished-task.component';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { TasksServicesService } from 'src/app/services/tasks-services.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,9 +26,10 @@ export class ListCompletedTasksComponent implements OnInit {
   existTasks: boolean;
 
   constructor(
-    public modalController: ModalController, 
+    public modalController: ModalController,
     private loadingController: LoadingController,
-    private taskService: TasksServicesService
+    private taskService: TasksServicesService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -43,9 +46,9 @@ export class ListCompletedTasksComponent implements OnInit {
 
     const { role, data } = await loading.onDidDismiss();
     this.getTasks()
-      .then((res: any)=>{
+      .then((res: any) => {
         this.tasksFinished = res.tasks;
-        
+
         if (this.tasksFinished !== undefined) {
           this.loadPartialData();
           this.existTasks = true;
@@ -53,19 +56,16 @@ export class ListCompletedTasksComponent implements OnInit {
           this.existTasks = false;
         }
       })
-      .catch(err=>{
+      .catch(err => {
         console.log(err);
-        
-      })
 
-    
-
+      });
   }
 
   getTasks() {
     return this.taskService.getFinishedTasks(localStorage.getItem('token')).toPromise();
   }
-  
+
   loadPartialData() {
     if (this.tasksFinished.length <= 5) {
       for (const key in this.tasksFinished) {
@@ -79,16 +79,14 @@ export class ListCompletedTasksComponent implements OnInit {
   loadMoreData(event) {
     if (this.tasksPartial.length === this.tasksFinished.length) {
       return event.target.complete();
-    }else {
-      if(this.tasksFinished.length >= 5) {
+    } else {
+      if (this.tasksFinished.length >= 5) {
         this.tasksPartial.push(...this.tasksFinished.splice(0, 5));
-      }else {
+      } else {
         this.tasksPartial.push(...this.tasksFinished.splice(0, this.tasksFinished.length));
         return event.target.complete();
       }
     }
-
-
   }
 
   loadData(event) {
@@ -107,5 +105,14 @@ export class ListCompletedTasksComponent implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      event.target.complete();
+      this.router.navigate(['/main', 'tasks']);
+    }, 2000);
   }
 }

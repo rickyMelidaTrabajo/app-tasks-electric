@@ -1,5 +1,9 @@
 <div class="container">
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div *ngIf="existTasks;else noExistTask">
     <div *ngFor="let task of tasksPartial; let i=index;">
       <div id="task-{{i+1}}" class="carousel slide" data-bs-ride="carousel">
