@@ -5,17 +5,35 @@
         <img src="../../assets/icon/electricista.png" alt="" srcset="" width="75">
       </div>
       <div class="brand-title">Eléctrica PLG</div>
-      <div class="inputs">
-        <form #useForm="ngForm" (ngSubmit)="getDataUser()">
-          <label>Usuario</label>
-          <input type="text" name="username" #username="ngModel" [(ngModel)]="dataUser.username"
-            placeholder="Ingrese su usuario" />
-          <label>Contraseña</label>
-          <input type="password" name="password" #password="ngModel" [(ngModel)]="dataUser.password"
-            placeholder="Ingrese su Contraseña" />
-          <button type="submit">LOGIN</button>
-        </form>
-      </div>
+
+      <ion-item *ngIf="server == 'local'; else sFirebase">
+        <div class="inputs">
+          <form #useForm="ngForm" (ngSubmit)="getDataUser()">
+            <label>Usuario</label>
+            <input type="text" name="username" #username="ngModel" [(ngModel)]="dataUser.username"
+              placeholder="Ingrese su usuario" />
+            <label>Contraseña</label>
+            <input type="password" name="password" #password="ngModel" [(ngModel)]="dataUser.password"
+              placeholder="Ingrese su Contraseña" />
+            <button type="submit">LOGIN</button>
+          </form>
+        </div>
+      </ion-item>
+
+      <ng-template #sFirebase>
+        <div class="inputs">
+          <form #useForm="ngForm" (ngSubmit)="getDataUser()">
+            <label>Usuario</label>
+            <input type="email" name="email" #email="ngModel" [(ngModel)]="dataUser.email"
+              placeholder="Ingrese su email" />
+            <label>Contraseña</label>
+            <input type="password" name="password" #password="ngModel" [(ngModel)]="dataUser.password"
+              placeholder="Ingrese su Contraseña" />
+            <button type="submit">LOGIN</button>
+          </form>
+        </div>
+      </ng-template>
+
     </div>
   </div>
 
@@ -26,4 +44,16 @@
       </div>
     </div>
   </div>
+
+<div class="row">
+  <div class="select-server">
+    <ion-item>
+      <ion-label>Servidor</ion-label>
+      <ion-select ok-text="Seleccionar" cancel-text="Cancelar" [(ngModel)]='server'>
+        <ion-select-option value="firebase">Firebase</ion-select-option>
+        <ion-select-option value="local">Local</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+</div>
 </div>

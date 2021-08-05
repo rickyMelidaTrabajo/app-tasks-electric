@@ -6,7 +6,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  global = 'http://localhost:1900/api/user/';
+  server = localStorage.getItem('server') == 'firebase' ? 'http://localhost:5000/' : 'http://localhost:1900/';
+
+  global = `${this.server}api/auth/`;
 
   constructor(private _http: HttpClient) { }
 

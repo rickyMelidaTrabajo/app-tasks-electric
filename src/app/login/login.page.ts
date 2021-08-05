@@ -13,29 +13,50 @@ export class LoginPage implements OnInit {
   dataUser: any;
   alert: boolean = false;
   messageError: string;
+  server: string;
 
   constructor(private authService: AuthService, private router: Router) {
     this.dataUser = {
       username: '',
+      email : '',
       password: ''
     };
   }
 
   ngOnInit() {
+    this.server = 'firebase';
   }
 
   getDataUser() {
-    this.authService.signin(this.dataUser).subscribe(
-      (res: any) => {
+    this.authService.signin(this.dataUser).toPromise()
+    .then((res:any)=>{
+      localStorage.setItem('server', this.server);
+      //localStorage.setItem('username', res.user);
+      //localStorage.setItem('token', res.token);
+      console.log(res)
+      this.router.navigate(['/main']);
+    })
+    .catch(err=>{
+      console.log(err.error)
+    })
+      
+      
+      
+      
+      /*(res: any) => {
+        localStorage.setItem('server', this.server);
         localStorage.setItem('username', res.user);
         localStorage.setItem('token', res.token);
+        console.log(res)
         this.router.navigate(['/main']);
       },
       err => {
         this.alert = true;
         this.messageError = err.error.message;
+        console.log('err');
+
       }
-    );
+    );*/
   }
 
 }
