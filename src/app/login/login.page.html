@@ -6,6 +6,7 @@
       </div>
       <div class="brand-title">Eléctrica PLG</div>
 
+
       <ion-item *ngIf="server == 'local'; else sFirebase">
         <div class="inputs">
           <form #useForm="ngForm" (ngSubmit)="getDataUser()">
@@ -44,16 +45,7 @@
       </div>
     </div>
   </div>
-
-<div class="row">
-  <div class="select-server">
-    <ion-item>
-      <ion-label>Servidor</ion-label>
-      <ion-select ok-text="Seleccionar" cancel-text="Cancelar" [(ngModel)]='server'>
-        <ion-select-option value="firebase">Firebase</ion-select-option>
-        <ion-select-option value="local">Local</ion-select-option>
-      </ion-select>
-    </ion-item>
+  <div class="row">
+    <p link="#" color="primary" (click)="presentModal()">Configurar Servidor</p>
   </div>
-</div>
 </div>

@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'main-admin',
     loadChildren: () => import('./pages-admin/main-admin/main-admin.module').then(m => m.MainAdminPageModule)
+  },
+  {
+    path: 'modal-server-configuration',
+    loadChildren: () => import('./modal-server-configuration/modal-server-configuration.module').then( m => m.ModalServerConfigurationPageModule)
   }
 ];
 @NgModule({

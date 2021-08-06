@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Configurar Servidor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <div class="select-server">
+        <ion-item>
+          <ion-label>Servidor</ion-label>
+          <ion-select ok-text="Seleccionar" cancel-text="Cancelar" [(ngModel)]='server.serv'>
+            <ion-select-option value="firebase">Firebase</ion-select-option>
+            <ion-select-option value="local">Local</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="row">
+      <ion-item>
+        <ion-label>IP: </ion-label>
+        <ion-input placeholder="ej: 192.168.22.555" [(ngModel)]='server.ip'></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Puerto: </ion-label>
+        <ion-input placeholder="ej: 80" [(ngModel)]='server.port'></ion-input>
+      </ion-item>
+
+      <button type="submit" class="btn btn-primary w-50 mx-auto my-3" (click)="getData()">Guardar</button>
+    </div>
+  </div>
+
+</ion-content>

@@ -9,8 +9,8 @@ import { ModalDeleteUserComponent } from './modal-delete-user/modal-delete-user.
 @NgModule({
   declarations: [FormUserComponent, ListUserComponent, ModalDeleteUserComponent],
   exports: [
-    FormUserComponent, 
-    ListUserComponent, 
+    FormUserComponent,
+    ListUserComponent,
     ModalDeleteUserComponent
   ],
   imports: [
